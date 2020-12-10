@@ -1,39 +1,56 @@
 class App extends React.Component {
     state = {
         name: "",
-        commentaire: "",
+        message: "",
         comments: []
     }
 
-    addName = (event) => {
-        console.log(event.target.value);
+    handleName =(event) => {
+        console.log("name: " + event.target.value);
         this.setState({
             name: event.target.value
-
         })
-
     }
 
+    handleMessage = (event) => {
+        console.log("message: "+ event.target.value);
+        this.setState({
+            message: event.target.value
+        })
+    }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        const comment = {
+            name: this.state.name,
+            message: this.state.message
+        }
+        console.log(comment);
+
+        const tmp = this.state.comments.concat(comment);
+        console.log(tmp);
+
+        this.setState({
+            comments: tmp
+        })
+    }
 
     render() {
-        return (
-
-            <div>
-                <h1>say something</h1>
-                <form>
-                    <input type="text" /><br></br>
-                    <textarea name="" id="" cols="21" rows="5"></textarea><br></br>
-                    <input type="submit" value="comment >" />
-
-
-
-
-                </form>
-
-
-            </div>
+        return(
+            <form onSubmit={this.handleSubmit}>
+                <input type="text" placeholder="Nom" 
+                    value={this.state.name}
+                    onChange={this.handleName}
+                     />
+                <textarea placeholder="message" 
+                    value={this.state.message}
+                    onChange={this.handleMessage}
+                    ></textarea>
+                <input type="submit" value="Envoyer" />
+            </form>
         )
     }
 }
-ReactDOM.render(<App />, document.getElementById('app'));
+
+ReactDOM.render(<App/>, document.getElementById("app"));
